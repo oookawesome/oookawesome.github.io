@@ -16,7 +16,7 @@
 title: oookawesome's blog
 description: > # this means to ignore newlines until "baseurl:"
   Material theme based on <a href="http://materializecss.com">Materialize.css</a> for jekyll sites
-baseurl: "/oookawesome"
+baseurl: "/"
 url: "https://oookawesome.github.io"
 permalink: /:year/:month/:day/:title
 repository: ShawnTeoh/matjek
