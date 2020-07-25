@@ -6,17 +6,15 @@ categories: DevOps
 tags: Jenkins
 ---
 
-### JenkinsFile을 활용한 Jenkins Pipeline 설정방법
-
-#### 프롤로그
+##### 프롤로그
 Jenkins에 CI 구성 중에, 테스트 이후, 결과를 전송하는 Job을 만들려 했다. 하지만 Jenkins에서 테스트가 실패하는 경우, 뒷 작업을 skip하도록 되어있어, 테스트 실패시, 결과를 전송하는 것이 불가능했다. 검색결과, JenkisFile을 통해 Jenkins Pipeline을 구성하면 해결할 수 있었다. 해당 내용을 정리했다.
 
-#### Jenkins Pipeline
+##### Jenkins Pipeline
 Jenkins 2.x 이상에서는 build item으로 Pipeline 형식을 제공하고, Pipeline은 Groovy와 같은 DSL로 작성된 파일을 바탕으로, Code기반의 자동화 테스트 표현을 가능하게 해준다.
 
 > JenkinsFile : Pipeline설정을 정의한 Groovy파일. 해당 파일에 Pipeline설정을 작성한다.
 
-#### 관련 용어
+##### 관련 용어
 - pipeline : 파이프라인은 CD Pipeline 모델을 나타낸다. 해당 부분의 코드는 전체 빌드 프로세스를 정의한다. 일반적으로 빌드, 테스트, 배포 등의 Stage를 포함하는 형식이 된다.  
 (선언적 파이프라인 형식으로, script를 사용하기 위해서는 scipt영역을 지정해야 함)
 - node : script 파이프라인 형식으로, script 키워드 없이 내부 스크립트 작성 가능
@@ -69,7 +67,7 @@ node {
 }
 ```
 
-#### script 주요 명령어
+##### script 주요 명령어
 - sh : bash쉘에서 쉘 스크립트 실행 (ex. sh 'gradlew test')
 - __bat : windows에서 쉘 스크립트 실행 (ex. bat 'gradlew test')__
 - echo : 콘솔 출력
@@ -77,7 +75,7 @@ node {
 - pwd : 현재 파일 디렉토리 경로 출력
 - try-catch문 사용가능
 
-#### Example (Windows에서 jenkins구동)
+##### Example (Windows에서 jenkins구동)
 ```
 pipeline {
     agent any
@@ -160,7 +158,7 @@ pipeline {
 }
 ```
 
-#### CI 설정 방법
+##### CI 설정 방법
 1. 작성한 JenkinsFile.groovy 파일을 프로젝트 루트에 저장
 2. Jenkins 서버 접속 > 새로운 Item > Pipeline 선택
 3. Pipeline 탭 > Definition > Pipeline Script from SCM 선택
@@ -170,7 +168,7 @@ pipeline {
 (JenkinsFile을 루트에 놓지 않은 경우, 경로 지정)
 
 ---
-#### 참고
+##### 참고
 - [파이프라인 개요](https://jenkins.io/doc/book/pipeline/)
 - [파이프라인 Syntax](https://jenkins.io/doc/book/pipeline/syntax/)
 - [샘플 코드](https://jenkins.io/doc/pipeline/examples/)

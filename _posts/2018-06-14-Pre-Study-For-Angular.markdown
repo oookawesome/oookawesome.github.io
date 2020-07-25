@@ -6,14 +6,13 @@ categories: Frontend
 tags: Node.js Electron TypeScript
 ---
 
-### Node.js와 Electron, TypeScript 기초
-#### 시작
+##### 시작
 새로운 프로젝트에서 개발업무를 시작하게 되었다. 프로젝트 기술스택에 대한 지식과 개념이 너무나 부족하고 정리가 안되있어, 본격적인 기술스택 학습에 앞서 사전 학습을 하게 되었다. [웹 기술에 대한 이전 스터디](/How-To-Work-Web)도 있다.
 
-#### Node.js
+##### Node.js
 Node.js는 V8(자바스크립트 엔진) 위에서 동작하는 이벤트 처리 I/O 프레임워크이다. (V8은 웹서버에서 응답받은 자바 스크립트를 크롬에서 해석해 돌리는 역할을 한다고 보면 된다.)
 
-##### 특징
+###### 특징
 - 이벤트 기반, 논 블로킹 I/O모델을 사용해 가볍고 효율적이다.
 - Node.js 라이브러리의 모든 API는 비동기식이다.
 - 단일 스레드모델을 사용한다.
@@ -22,7 +21,7 @@ Node.js는 V8(자바스크립트 엔진) 위에서 동작하는 이벤트 처리
 - npm : Node Package Module의 약자로, Node.js에서 사용가능한 모듈을 모아놓은 패키지 매니저
 - express : Node.js상에서 동작하는 웹 개발 프레임워크. 이를 이용해 손쉽게 웹서버를 구축할 수 있다.
 
-##### express 디렉토리 구조
+###### express 디렉토리 구조
 패키지 설치 : `$ npm install express`
 express모듈 설치 : `$ express sample`
 자동 생성된 sample폴더 디렉토리 구조 :  
@@ -63,17 +62,17 @@ express모듈 설치 : `$ express sample`
 프로그램 구동 : `$ npm start`
 
 
-#### TypeScript
+##### TypeScript
 TypeScript는 마이크로소프트에서 개발한 자바 스크립트의 슈퍼셋 언어이다. 슈퍼셋 언어이기에 자바 스크립트로 작성된 모든 프로그램은 타입스크립트로도 동작한다.
 
-##### 특징
+###### 특징
 - 대규모 프로젝트에 적합하다.
 - 자바 스크립트에 정적 타입 개념을 추가했다. 명시적 자료형 선언이 가능하다.
 - TypeScript를 컴파일하면, 자바 스크립트를 얻을 수 있다.
 - 객체지향 프로그래밍 지원
 - 리팩토링에 용이
 
-##### Hello, World!
+###### Hello, World!
 ```
 function greeter(word: string) {
     return "Hello, " + word;
@@ -86,10 +85,10 @@ document.body.innerHTML = greeter(word); // Hello, World!
 document.body.innerHTML = greeter(word2); // 컴파일 에러 발생
 ```
 
-#### Electron
+##### Electron
 Electron은 웹 애플리케이션의 프런트엔드와 백엔드 구성 요소를 사용하여 데스크톱 그래픽 사용자 인터페이스 애플리케이션의 개발을 가능하게 해주는 툴이다. 백엔드로는 Node.js 런타임을, 프론트엔드로는 Chromium을 사용한다.
 
-##### 프로세스 구조
+###### 프로세스 구조
 Electron의 프로세스는 메인 프로세스와 렌더러 프로세스로 구성되어있다.  
 
 ![pivotal](../assets/images/posts/electron.png){: width="100%" height="100%"}
@@ -102,7 +101,7 @@ Electron의 프로세스는 메인 프로세스와 렌더러 프로세스로 구
 - Node.js의 모든 API는 Electron에서 사용 가능
 
 ------
-#### 참고
+##### 참고
 - Node.js
   - <https://velopert.com/1331>
   - <http://webframeworks.kr/getstarted/expressjs/>
