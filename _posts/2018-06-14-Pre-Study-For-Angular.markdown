@@ -91,7 +91,7 @@ Electron은 웹 애플리케이션의 프런트엔드와 백엔드 구성 요소
 ###### 프로세스 구조
 Electron의 프로세스는 메인 프로세스와 렌더러 프로세스로 구성되어있다.  
 
-![pivotal](../assets/images/posts/electron.png){: width="100%" height="100%"}
+![pivotal](../assets/postImages/electron.png){: width="100%" height="100%"}
 
 - 메인 프로세스는 반드시 1개이며, 각각 웹 페이지마다 렌더러 프로세스가 개별적으로 존재
 - 메인 프로세스는 BrowserWindow 인스턴스를 생성하여 웹 페이지를 생성

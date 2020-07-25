@@ -28,16 +28,16 @@ HTML, CSS, 자바 스크립트는 웹을 구성하는 대표적인 요소, 3요�
 
 #### 웹과 브라우저의 동작 원리
 ##### 개요
-![web](../assets/images/posts/website-diagram.jpg){: width="100%" height="100%"}
+![web](../assets/postImages/website-diagram.jpg){: width="100%" height="100%"}
 네이버 홈페이지를 접속하는 것을 예로 생각해보면, 웹 브라우저는 입력받은 URL로 네이버 웹 서버에 http요청을 보낸다. 이 요청을 받은 서버는 네이버 홈에 대한 HTML, CSS, JS, 이미지 등을 응답으로 보내준다.  
 
-![naver](../assets/images/posts/naver-screenshot.png){: width="100%" height="100%"}
+![naver](../assets/postImages/naver-screenshot.png){: width="100%" height="100%"}
 
 브라우저는 이 응답을 파싱하고 화면에 변환하여 표시해준다.
 
 ##### DOM
 DOM이란? 문서객체모델의 약자로, 브라우저에선 HTML문서의 태그, 속성, 프로퍼티, 텍스트 등은 모두 별도의 객체로 파싱되고 이 객체들을 DOM이라고 한다.  
-![dom](../assets/images/posts/dom.gif){: width="100%" height="100%"}
+![dom](../assets/postImages/dom.gif){: width="100%" height="100%"}
 이 객체모델(DOM)에 대한 API들이 존재한다. 자바 스크립트는 이 API들을 이용해 웹 페이지를 동적으로 구동되도록 한다.  
 ```
 <html>
