@@ -13,7 +13,7 @@ a) 컨테이너 단위로 관리
 b) Auto Scale  
 c) Microservice 중심 관리
 
-![pivotal](../assets/postImages/pivotal.jpg){: width="100%" height="100%"}
+![pivotal](../../../assets/postImages/pivotal.jpg){: width="100%" height="100%"}
 
 ##### 넷플릭스 MSA
 여러 세션이 있었으나 가장 주의깊게 들었던 넷플릭스 케이스에 대한 내용을 정리했다.

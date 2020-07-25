@@ -55,7 +55,7 @@ Pact는 소비자가 Contract를 Stub코드를 작성하듯(Wiremock쓸 때, stu
 
 Spring Cloud Contract는 소비자가 Contract를 제공자 코드쪽에 Groovy로 작성한다. 이 후 서비스 코드 빌드시, Spring Cloud Contract는 이 명세를 자동으로 테스트 코드로 generate한다. 이 테스트 코드를 Unit Test와 같이 테스트 하게된다. 테스트가 정상적으로 통과되면, 넥서스와 같은 repository에 stub.jar라는 형태로 업로드된다. 이제 소비자 쪽에서는 이러한 stub.jar를 가져와 실제 서비스로 가정하고 원하는 명세에 대한 테스트를 작성한다.
 
-![spring cloud contract](../assets/postImages/spring-cloud-contract.png){: width="100%" height="100%"}
+![spring cloud contract](../../../assets/postImages/spring-cloud-contract.png){: width="100%" height="100%"}
 
 ### 적용하면서 어려웠던 점
 Spring Cloud Contract를 적용하면서 가장 어려웠던 점은 소비자가 제공자 코드에 Groovy코드를 작성해야 한다는 점이었다. 개발자들은 놀라울 정도로 자기 프로젝트 코드, 빌드 파이프라인에만 관심이 있었다. 코드를 내려받아서, 내게 오너십이 없는 다른 코드에 손을 대 푸시를 하는 일에 불편함을 느끼는 것 같았다. 사실 그리고 테스트 담당자인 우리도 이해하는 데 한참 걸린 이 복잡한 프로세스를 설명하고 공감대를 형성하는 일 자체도 어려운 일이었다.
