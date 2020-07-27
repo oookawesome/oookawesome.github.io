@@ -54,11 +54,11 @@ Template
 - 지시어(Directive), 표현식, 필터 등을 포함함
 
 Dependency Injection
-![angular-di](../../../assets/postImages/angular-di.png){: width="70%" height="70%"}
+![angular-di](../../../assets/postImages/angular-di.png){: width="50%" height="50%"}
 - Injector : Dependency Injection을 담는 컨테이너 역할
 
 Module
-![angular-module](../../../assets/postImages/angular-module.png){: width="70%" height="70%"}
+![angular-module](../../../assets/postImages/angular-module.png){: width="50%" height="50%"}
 - 애플리케이션의 각기 다른 기능을 나타내는 컨테이너(Controller, Filter, Service, Directive 등을 포함)
 
 Service
@@ -71,7 +71,7 @@ Expression
 - {% raw %}ex. {{ name }}, {{ 3%5 }}, {{"안녕" + "!"}}{% endraw %}
 
 ##### 부트스트랩 (Initialize)
-![angular-start-up](../../../assets/postImages/angular-concepts-startup.png){: width="70%" height="70%"}
+![angular-start-up](../../../assets/postImages/angular-concepts-startup.png){: width="50%" height="50%"}
 1. Browser가 HTML을 DOM으로 파싱
 2. DOM이 전부 로딩된 상태(DOMContentLoaded)가 되면 자동으로 AngularJS 초기화 시작
 3. 애플리케이션의 root를 나타내는 ng-app directive를 찾는다.
