@@ -5,8 +5,8 @@ date: 2018-05-07 17:30:00 +0300
 categories: Java
 tags: RxJava ReactiveProgramming
 ---
-##### 3장 연산자와 변환
-###### filter
+#### 3장 연산자와 변환
+##### filter
 filter는 정확히 동일한 연산자를 반환함.  
 
 ![filter](../../../assets/postImages/rx-diagram/rx-filter.png){: width="60%" height="60%"}
@@ -14,7 +14,7 @@ filter는 정확히 동일한 연산자를 반환함.
 Observable<String> strings = ....
 Observable<String> filtered = strings.filter(s -> s.startsWith("#"));
 ```
-###### map
+##### map
 업스트림에서 흘러오는 개별 이벤트 모두에 대해 변환을 적용  
 
 ![map](../../../assets/postImages/rx-diagram/rx-map.png){: width="60%" height="60%"}
@@ -22,7 +22,7 @@ Observable<String> filtered = strings.filter(s -> s.startsWith("#"));
 Observable<Instant> instants = tweets.map(Status::getCreatedAt)
                                      .map((Date d) -> d.toInstant());
 ```
-###### flatMap
+##### flatMap
 얼핏 보기에는 map과 비슷하지만, __개별 변환한 요소를 다른(중첩된, 내부의) Observable로 반환한다.__ flatMap을 개별 업스트림 이벤트에 대한 비동기 연산으로 생성하여 분할 실행한 뒤, 결과를 다시 모을 때 사용할 수 있다.
 
 ![flatMap](../../../assets/postImages/rx-diagram/rx-flatmap.png){: width="60%" height="60%"}
@@ -39,7 +39,7 @@ numbers.flatMap(x -> (x != 10) just(x) : empty());
   - 단일 이벤트가 여러 하위 이벤트로 확장되는, 일대다 변환이 필요한 경우
 - flatMap은 부속 이벤트가 다운스트림 연산자/구독자에게 도달하는 순서를 보장할 수 없다.
 
-###### merge
+##### merge
 여러 이벤트 소스를 하나로 합친다.  
 
 ![merge](../../../assets/postImages/rx-diagram/rx-merge.png){: width="60%" height="60%"}
@@ -50,7 +50,7 @@ Observable<String> all = Observable.merge(
   experimentalAlgo(photo)
   )
 ```
-###### zip
+##### zip
 스트림 두 개 이상을 합치되, 각각의 서로 대응하는 개별 이벤트끼리 짝을 맞춘다.
 
 ![zip](../../../assets/postImages/rx-diagram/rx-zip.png){: width="60%" height="60%"}
