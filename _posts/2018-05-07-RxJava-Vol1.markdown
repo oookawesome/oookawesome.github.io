@@ -6,7 +6,7 @@ categories: Java
 tags: RxJava ReactiveProgramming
 ---
 
-### 1장 개요
+##### 1장 개요
 - RxJava란?
   - 자바와 안드로이드를 위한 리액티브 프로그래밍 구현체로, 함수형 프로그래밍의 영향을 받았다.
 - 리액티브 프로그래밍이란?
@@ -22,7 +22,7 @@ tags: RxJava ReactiveProgramming
   - __Observable은 느긋(lazy)하다. Observer가 구독하지 않는 한 이벤트 방출을 시작하지 않는다.__
   - Observable은 재사용할 수 있다.
 
-### 2장 Observable과 Observer, Subscriber
+##### 2장 Observable과 Observer, Subscriber
 - Observable
   - `rx.Observable<T>`는 값이 흐르는 순서를 나타낸다.
   - `Observable<T>`은 3가지 유형의 이벤트를 만들어 낼 수 있다. (T 자료형의 값, 완료, 오류)
