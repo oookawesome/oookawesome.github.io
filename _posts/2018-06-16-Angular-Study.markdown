@@ -20,7 +20,7 @@ AngularJS는 자바스크립트 기반의 프론트엔드 웹 애플리케이션
 - 의존 주입(Dependency Injection) 활용
 
 ##### MVC 모델
-![angular-mvc](../../../assets/postImages/angular-mvc.png){: width="100%" height="100%"}
+![angular-mvc](../../../assets/postImages/angular-mvc.png){: width="50%" height="50%"}
 
 Model
 - 데이터를 정의하는 부분으로, 변형되지 않는 자바 스크립트 객체로 구성
