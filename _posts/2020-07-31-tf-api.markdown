@@ -6,16 +6,16 @@ categories: ML
 tags: ML Tensorflow Slim ObjectDetection CUDA
 comments: 1
 ---
-# Tensorflow 
+### 들어가기전에
+삽질의 확률이 매우 높고, 알아도 나중에 까먹을 가능성이 높다. 
 > 1. __순서대로 꼼꼼하게 차근차근 진행해나가야 함!__
 > 2. 경로표시 시, 백슬래시 사용를 사용하게 되면 오류가 발생함. 슬래시를 통해 표현하도록 해야함
-
-## 사전 환경 세팅
-
-### PC 사양 확인
+---
+### 사전 환경 세팅
+##### PC 사양 확인
 그래픽 카드 확인 : `장치 관리자 > 디스플레이 어댑터`
 
-### CUDA & cuDNN 설치
+##### CUDA & cuDNN 설치
 1. GPU Compute capability 확인
 	1. [nvidia 페이지](https://developer.nvidia.com/cuda-gpus#compute) 접속
 	2. 모델명에 맞는 capability 확인
@@ -38,7 +38,7 @@ comments: 1
 5. 설치 확인
 	1. `$nvcc --version`
 
-### Tensorflow gpu 설치
+##### Tensorflow gpu 설치
 1. Tensorflow gpu 버전 확인
 	1. [Tensorflow build config 페이지](https://www.tensorflow.org/install/source_windows#tested_build_configurations) 접속 (Linux는 [여기](https://www.tensorflow.org/install/source#tested_build_configurations))
 	2. GPU 탭에서 CUDA, cuDNN 버전에 맞는 tensorflow-gpu, python 버전 확인
@@ -60,7 +60,7 @@ comments: 1
 		...
 		```
 
-## Tensorflow model 설치
+### Tensorflow model 설치
 [Git Hub 페이지](https://github.com/EdjeElectronics/TensorFlow-Object-Detection-API-Tutorial-Train-Multiple-Objects-Windows-10)를 참조하여 작성
 1. Tensorflow model 다운로드
 	1. [model 페이지](https://github.com/tensorflow/models)에 접속
@@ -102,9 +102,9 @@ comments: 1
 	3. Run All
 	4. object detection 박스가 그려진 이미지가 출력되면 정상 동작
 
-## Object Detection 학습
+### Object Detection 학습
 
-### 샘플 Github & model 다운로드
+##### 샘플 Github & model 다운로드
 1. Github 파일 다운로드
 	1. [샘플 git hub](https://github.com/EdjeElectronics/TensorFlow-Object-Detection-API-Tutorial-Train-Multiple-Objects-Windows-10)에서 소스를 zip으로 다운로드
 	2. 압축 해제
@@ -113,7 +113,7 @@ comments: 1
 	1. Faster-RCNN-Inception-V2 model [다운로드](http://download.tensorflow.org/models/object_detection/faster_rcnn_inception_v2_coco_2018_01_28.tar.gz)
 	2. object_detection 폴더 내에 압축 해제
 
-### 샘플 이미지 생성
+##### 샘플 이미지 생성
 1. [labelImg 다운로드] https://github.com/tzutalin/labelImg
 2. 이미지를 수집한다
 3. 수집된 이미지와 xml을 8:2로 나누어 images/train, images/test에 각각 저장
@@ -123,7 +123,7 @@ comments: 1
 	```
 5. images 폴더 내에 train_labels.csv, test_labels.csv 생성 확인
 
-### Training 데이터 생성
+##### Training 데이터 생성
 1. generate_tfrecord.py 열기
 2. 31행의 if-else 조건을 수집한 라벨에 맞게 변경
 	```
@@ -145,7 +145,7 @@ comments: 1
 	```
 4. train.record, test.record 파일 생성 확인
 
-### 학습 Config 설정
+##### 학습 Config 설정
 1. labelmap 수정
 	1. object_detection\training 폴더 내 labelmap.pbtxt 파일 열기
 	2. 해당 파일의 id, name의 값을 수집한 데이터의 라벨에 맞춰 변경
@@ -160,20 +160,20 @@ comments: 1
 		- line 130 num_examples : \images\test 폴더 내에 있는 이미지 개수로 변경하기
 		- line 135 and 137 in eval_input_reader : train/test record 경로와 label map 경로로 변경하기
 
-### 학습
+##### 학습
 `$python train.py --logtostderr --train_dir=training/ --pipeline_config_path=training/faster_rcnn_inception_v2_pets.config`
 
-### Inference graph 저장
+##### Inference graph 저장
 `$python export_inference_graph.py --input_type image_tensor --pipeline_config_path training/faster_rcnn_inception_v2_pets.config --trained_checkpoint_prefix training/model.ckpt-{최종숫자} --output_directory inference_graph`
 
-## Slim 학습
+### Slim 학습
 [slim을 활용한 블로그 페이지](https://euhyeji.blogspot.com/2018/08/tf19-slim-1-install-tensorflow-gpu.html)를 참조하여 작성 
 
-### model 다운로드
+##### model 다운로드
 1. [inception_v1 다운로드](http://download.tensorflow.org/models/inception_v1_2016_08_28.tar.gz)
 2. models/research/slim 폴더에 압축 해제
 
-### 이미지 다운로드
+##### 이미지 다운로드
 Kaggle에 업로드되어 있는 icon 데이터를 학습 시켜보도록 하자
 1. [Kaggle icons 데이터 다운로드](https://www.kaggle.com/testdotai/common-mobile-web-app-icons)
 2. 압축 해제 (ex. C:\sample\icons\icons_photos)
@@ -181,7 +181,7 @@ Kaggle에 업로드되어 있는 icon 데이터를 학습 시켜보도록 하자
 	- \_negative 폴더 제거
 	- svg, html 등의 불필요 파일 제거
 
-### TFRecord 변환
+##### TFRecord 변환
 1. icon 데이터용 dataset 코드 생성
 	1. slim\dataset으로 이동
 	2. download_and_convert_flowers.py를 복사해 붙여넣고, 해당 파일의 이름을 download_and_convert_icons.py로 변경
@@ -223,7 +223,7 @@ Kaggle에 업로드되어 있는 icon 데이터를 학습 시켜보도록 하자
 6. 변환 수행 : `$python download_and_convert_data.py --dataset_name=icons --dataset_dir=C:\sample\icons`
 7. dataset_dir에 tfrecord 파일들이 생성됬는 지 확인
 
-### 학습
+##### 학습
 1. 1차 수행 : 10000번 수행, learning_rate는 0.01
 ```
 $python train_image_classifier.py --train_dir=training --dataset_name=icons --dataset_split_name=train --dataset_dir=../../../dataset/icons --model_name=inception_v1 --checkpoint_path=inception_v1_2016_08_28/inception_v1.ckpt --checkpoint_exclude_scopes=InceptionV1/Logits --trainable_scopes=InceptionV1/Logits --max_number_of_steps=10000 --batch_size=16 --learning_rate=0.01 --learning_rate_decay_type=fixed --save_interval_secs=60 --save_summaries_secs=60 --log_every_n_steps=100 --optimizer=rmsprop --weight_decay=0.00004
@@ -237,7 +237,7 @@ $python train_image_classifier.py --train_dir=training/all --dataset_name=icons 
 $python eval_image_classifier.py --alsologtostderr --checkpoint_path=training/all --dataset_dir=../../../dataset/icons --dataset_name=icons --dataset_split_name=validation --model_name=inception_v1
 ```
 
-### 학습 모델 사용하기
+##### 학습 모델 사용하기
 image_classification_icons.py 파일을 생성하고, 아래 코드를 작성. 상세 설정은 코드 내 주석 참조
 ```
 from matplotlib import pyplot as plte
@@ -285,3 +285,9 @@ with tf.Graph().as_default():
         print('Probability %0.2f%% => [%s]' % (probabilities[index], names[index]))
 ```
 코드 수행 시, 이미지 창이 출력되고, 터미널에 측정 결과가 표시되면 정상 동작한 것임
+
+---
+##### 출처
+- https://github.com/EdjeElectronics/TensorFlow-Object-Detection-API-Tutorial-Train-Multiple-Objects-Windows-10
+- https://euhyeji.blogspot.com/2018/08/tf19-slim-1-install-tensorflow-gpu.html
+ 
