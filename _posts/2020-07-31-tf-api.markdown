@@ -1,0 +1,287 @@
+---
+layout: post
+title: "Windows에서 Tensorflow gpu를 설치하고, Tensorflow api (slim, object detection) 을 이용해, 나만의 이미지를 학습, 인식하기"
+date: 2020-07-31 14:30:00 +0300
+categories: ML
+tags: ML Tensorflow Slim ObjectDetection CUDA
+comments: 1
+---
+# Tensorflow 
+> 1. __순서대로 꼼꼼하게 차근차근 진행해나가야 함!__
+> 2. 경로표시 시, 백슬래시 사용를 사용하게 되면 오류가 발생함. 슬래시를 통해 표현하도록 해야함
+
+## 사전 환경 세팅
+
+### PC 사양 확인
+그래픽 카드 확인 : `장치 관리자 > 디스플레이 어댑터`
+
+### CUDA & cuDNN 설치
+1. GPU Compute capability 확인
+	1. [nvidia 페이지](https://developer.nvidia.com/cuda-gpus#compute) 접속
+	2. 모델명에 맞는 capability 확인
+2. CUDA SDK 버전 확인
+	1. [CUDA 위키](https://en.wikipedia.org/wiki/CUDA) 접속
+	2. GPUs supported에서 내 capability가 사용가능한 SDK버전 확인
+3. CUDA Toolkit download 및 설치	
+	1. [CUDA archive](https://developer.nvidia.com/cuda-toolkit-archive) 접속
+	2. 2의 사양에 맞는 Toolkit 다운
+	3. CUDA 설치
+		1. 에러나는 경우, 사용자 정의 > Visual Studio Integration 제외하고 설치
+		2. 설치파일 압축 해제
+		3. Visual Studio Integration 수동 설치 (경로 : CUDAVisualStudioIntegraion)
+4. cuDNN 설치
+	1. nvidia 멤버쉽 가입
+	2. [다운로드 페이지](https://developer.nvidia.com/rdp/cudnn-download#a-collapse714-92) 접속
+	3. CUDA 버전에 맞는 cuDNN 다운로드 
+	4. 압축 해제
+	5. 해제된 파일 내에 bin, include, lib파일을 복사하여, CUDA 설치 경로에 붙여넣기 (덮어쓰기)
+5. 설치 확인
+	1. `$nvcc --version`
+
+### Tensorflow gpu 설치
+1. Tensorflow gpu 버전 확인
+	1. [Tensorflow build config 페이지](https://www.tensorflow.org/install/source_windows#tested_build_configurations) 접속 (Linux는 [여기](https://www.tensorflow.org/install/source#tested_build_configurations))
+	2. GPU 탭에서 CUDA, cuDNN 버전에 맞는 tensorflow-gpu, python 버전 확인
+2. tensorflow-gpu 설치
+	1. `$conda create -n tf-gpu-sample python={1에서 확인한 버전내의 버전}`
+	2. `$conda activate tf-gpu-sample`
+	3. `$conda install tensorflow-gpu={1에서 확인한 버전}`
+3. 설치 확인
+	1. `$python`
+	2. 샘플 코드 실행
+		```
+		import tensorflow as tf
+		sess = tf.Session(config=tf.ConfigProto(log_device_placement=True))
+		```
+	3. Property 정보 출력 확인
+		```
+		...
+		name: GeForce GTX 1060 major: 6 minor: 1 memoryClockRate(GHz): 1.6705
+		...
+		```
+
+## Tensorflow model 설치
+[Git Hub 페이지](https://github.com/EdjeElectronics/TensorFlow-Object-Detection-API-Tutorial-Train-Multiple-Objects-Windows-10)를 참조하여 작성
+1. Tensorflow model 다운로드
+	1. [model 페이지](https://github.com/tensorflow/models)에 접속
+	2. 설치한 tensorflow-gpu 버전과 매칭되는 revision을 선택 (ex. r1.13.0)
+	3. zip파일 다운로드
+	4. 압축 해제
+2. 환경 변수 설정
+	1. PYTHONPATH 환경 변수에 \models, \models\research, \models\research\slim 폴더를 설정
+	2. `set PYTHONPATH=C:\sample\models;C:\sample\models\research;C:\sample\models\research\slim`
+3. 필수 라이브러리 설치
+	```
+	$pip install pillow lxml Cython jupyter matplotlib pandas opencv-python
+	```
+4. protobuf 설치
+	1. [protobuf github](https://github.com/protocolbuffers/protobuf/releases) 접속
+	2. protoc-win64.zip 다운로드
+	3. 압축헤제
+5. Compile
+	1. `$cd \models\research`
+	2. protobuf 컴피일
+		```
+		${4의 protobuf 해제경로}\protoc object_detection/protos/*.proto --python_out=.
+		```
+	3. 컴파일 확인 : object_detection\protos로 이동하여 {파일명}_pb2.py 파일이 생성됬는 지 확인
+6. Install 
+	1. `$cd \models\research`
+	2. `$python setup.py build`
+	3. `$python setup.py install`
+7. 정상 설치 확인
+	1. jupyter에 현재 사용중인 가상환경 kernel 추가
+		```
+		$python -m ipykernel install --user --name tf-gpu-sample --display-name "tf-gpu-sample"
+		```
+	2. tutorial.ipynb 실행
+		```
+		$cd models\research\object_detection
+		$jupyter-notebook object_detection_tutorial.ipynb
+		```
+	3. Run All
+	4. object detection 박스가 그려진 이미지가 출력되면 정상 동작
+
+## Object Detection 학습
+
+### 샘플 Github & model 다운로드
+1. Github 파일 다운로드
+	1. [샘플 git hub](https://github.com/EdjeElectronics/TensorFlow-Object-Detection-API-Tutorial-Train-Multiple-Objects-Windows-10)에서 소스를 zip으로 다운로드
+	2. 압축 해제
+	3. 해체한 폴더내의 파일들을 복사하여 object_detection 폴더 내에 붙여넣기
+2. Model 다운로드
+	1. Faster-RCNN-Inception-V2 model [다운로드](http://download.tensorflow.org/models/object_detection/faster_rcnn_inception_v2_coco_2018_01_28.tar.gz)
+	2. object_detection 폴더 내에 압축 해제
+
+### 샘플 이미지 생성
+1. [labelImg 다운로드] https://github.com/tzutalin/labelImg
+2. 이미지를 수집한다
+3. 수집된 이미지와 xml을 8:2로 나누어 images/train, images/test에 각각 저장
+4. 수집한 이미지는 xml파일로 저장되는 데, 이것을 csv형태로 변환한다
+	```
+	$python xml_to_csv.py
+	```
+5. images 폴더 내에 train_labels.csv, test_labels.csv 생성 확인
+
+### Training 데이터 생성
+1. generate_tfrecord.py 열기
+2. 31행의 if-else 조건을 수집한 라벨에 맞게 변경
+	```
+	# Example
+	def class_text_to_int(row_label):
+		if row_label == 'basketball':
+			return 1
+		elif row_label == 'shirt':
+			return 2
+		elif row_label == 'shoe':
+			return 3
+		else:
+			None
+	```
+3. TFRecord 데이터로 변환
+	```
+	$python generate_tfrecord.py --csv_input=images\train_labels.csv --image_dir=images\train --output_path=train.record
+	$python generate_tfrecord.py --csv_input=images\test_labels.csv --image_dir=images\test --output_path=test.record
+	```
+4. train.record, test.record 파일 생성 확인
+
+### 학습 Config 설정
+1. labelmap 수정
+	1. object_detection\training 폴더 내 labelmap.pbtxt 파일 열기
+	2. 해당 파일의 id, name의 값을 수집한 데이터의 라벨에 맞춰 변경
+	3. __JSON 형식이 아님!__ 습관적으로 json처럼 작성하지 않도록 주의
+2. Traininig config 수정
+	1. object_detection\samples\config 폴더로 이동
+	2. faster_rcnn_inception_v2_pets.config 파일을 \object_detection\training폴더로 복사
+	3. faster_rcnn_inception_v2_pets.config을 열어 config 설정을 변경 (__중요! Backslash 사용을 해선 안됨__)
+		- line 9, num_classes : 앞서 정의한 label 개수로 변경하기
+		- line 123, 125 in train_input_reader : train record 경로와 label map 경로로 변경하기
+		- line 106, fine_tune_checkpoint 변경하기 : ex) "C:/sample/models/research/object_detection/faster_rcnn_inception_v2_coco_2018_01_28/model.ckpt
+		- line 130 num_examples : \images\test 폴더 내에 있는 이미지 개수로 변경하기
+		- line 135 and 137 in eval_input_reader : train/test record 경로와 label map 경로로 변경하기
+
+### 학습
+`$python train.py --logtostderr --train_dir=training/ --pipeline_config_path=training/faster_rcnn_inception_v2_pets.config`
+
+### Inference graph 저장
+`$python export_inference_graph.py --input_type image_tensor --pipeline_config_path training/faster_rcnn_inception_v2_pets.config --trained_checkpoint_prefix training/model.ckpt-{최종숫자} --output_directory inference_graph`
+
+## Slim 학습
+[slim을 활용한 블로그 페이지](https://euhyeji.blogspot.com/2018/08/tf19-slim-1-install-tensorflow-gpu.html)를 참조하여 작성 
+
+### model 다운로드
+1. [inception_v1 다운로드](http://download.tensorflow.org/models/inception_v1_2016_08_28.tar.gz)
+2. models/research/slim 폴더에 압축 해제
+
+### 이미지 다운로드
+Kaggle에 업로드되어 있는 icon 데이터를 학습 시켜보도록 하자
+1. [Kaggle icons 데이터 다운로드](https://www.kaggle.com/testdotai/common-mobile-web-app-icons)
+2. 압축 해제 (ex. C:\sample\icons\icons_photos)
+3. 불필요 파일 제거
+	- \_negative 폴더 제거
+	- svg, html 등의 불필요 파일 제거
+
+### TFRecord 변환
+1. icon 데이터용 dataset 코드 생성
+	1. slim\dataset으로 이동
+	2. download_and_convert_flowers.py를 복사해 붙여넣고, 해당 파일의 이름을 download_and_convert_icons.py로 변경
+	3. flowers.py를 복사-붙여넣기하고, 이름을 icons.py로 변경
+2. download_and_convert_icons.py 수정
+	- line 46, \_NUM_VALIDATION : icons의 이미지 중 validation할 이미지 갯수 (icons 이미지의 총 개수는 142014임. 약 20%를 validation하면 47639)
+	- line 53, \_NUM_SHARD : 데이터 분할 갯수 (용량 1.1GB일 때, 이 값이 20이면 1파일당 1.1/20 = 40MB)
+	- line 87, 'flowser_photos'를 'icons_photos'로 변경
+	- line 106, 'flowers' 수정
+	- line 190, 다운로드 코드 주석처리
+3. icons.py 수정
+	- line 32, \_FILE_PATTERN : 'flowers' 수정
+	- line 34, SPLITS_TO_SIZES : train, validation 값을 데이터 갯수에 맞춰 수정 (train: 94375, validation: 47639)
+	- line 36, \_NUM_CLASSES : class 갯수에 맞춰 수정 (105)
+4. download_and_convert_data.py 수정
+	1. slim\download_and_convert_data.py 열기
+	2. download_and_convert_icons 임포트
+		```
+		from datasets import download_and_convert_icons
+		```
+	3. line 69, if-else condition 추가
+		```
+		...
+		elif FLAGS.dataset_name == 'icons':
+			download_and_convert_icons(FLAGS.dataset_dir)
+		...
+		```
+5. dataset_factory.py 수정
+	1. icons 임포트
+		```
+		from datasets import icons
+		```
+	2. datasets_map 값 추가
+		```
+		...
+		'icons': icons
+		...
+		```
+6. 변환 수행 : `$python download_and_convert_data.py --dataset_name=icons --dataset_dir=C:\sample\icons`
+7. dataset_dir에 tfrecord 파일들이 생성됬는 지 확인
+
+### 학습
+1. 1차 수행 : 10000번 수행, learning_rate는 0.01
+```
+$python train_image_classifier.py --train_dir=training --dataset_name=icons --dataset_split_name=train --dataset_dir=../../../dataset/icons --model_name=inception_v1 --checkpoint_path=inception_v1_2016_08_28/inception_v1.ckpt --checkpoint_exclude_scopes=InceptionV1/Logits --trainable_scopes=InceptionV1/Logits --max_number_of_steps=10000 --batch_size=16 --learning_rate=0.01 --learning_rate_decay_type=fixed --save_interval_secs=60 --save_summaries_secs=60 --log_every_n_steps=100 --optimizer=rmsprop --weight_decay=0.00004
+```
+2. 2차 수행 : 5000번 수행, learning_rate는 0.0001, checkpoint_path는 1차의 train_dir, train_dir은 training/all
+```
+$python train_image_classifier.py --train_dir=training/all --dataset_name=icons --dataset_split_name=train --dataset_dir=../../../dataset/icons --model_name=inception_v1 --checkpoint_path=training --max_number_of_steps=5000 --batch_size=16 --learning_rate=0.0001 --learning_rate_decay_type=fixed --save_interval_secs=60 --save_summaries_secs=60 --log_every_n_steps=100 --optimizer=rmsprop --weight_decay=0.00004
+```
+3. 학습 결과 확인
+```
+$python eval_image_classifier.py --alsologtostderr --checkpoint_path=training/all --dataset_dir=../../../dataset/icons --dataset_name=icons --dataset_split_name=validation --model_name=inception_v1
+```
+
+### 학습 모델 사용하기
+image_classification_icons.py 파일을 생성하고, 아래 코드를 작성. 상세 설정은 코드 내 주석 참조
+```
+from matplotlib import pyplot as plte
+
+import numpy as np
+import os
+import tensorflow as tf
+
+from nets import inception
+from preprocessing import inception_preprocessing
+
+checkpoints_dir = 'training/all'
+
+slim = tf.contrib.slim
+
+image_size = inception.inception_v1.default_image_size
+
+with tf.Graph().as_default():
+    image_input = tf.read_file('../../../dataset/test_data/split21.PNG') # 테스트할 이미지 경로
+    image = tf.image.decode_jpeg(image_input, channels=3)
+    processed_image = inception_preprocessing.preprocess_image(image, image_size, image_size, is_training=False)
+    processed_images = tf.expand_dims(processed_image, 0)
+
+    with slim.arg_scope(inception.inception_v1_arg_scope()):
+        logits, _ = inception.inception_v1(processed_images, num_classes=105, is_training=False) # num_classes는 테스트 데이터의 class수
+    probabilities = tf.nn.softmax(logits)
+
+    init_fn = slim.assign_from_checkpoint_fn(os.path.join(checkpoints_dir, 'model.ckpt-50000'),
+                                             slim.get_model_variables('InceptionV1')) # model checkpoint 값 설정
+
+    with tf.Session() as sess:
+        init_fn(sess)
+        np_image, probabilities = sess.run([image, probabilities])
+        probabilities = probabilities[0, 0:]
+        sorted_inds = [i[0] for i in sorted(enumerate(-probabilities), key=lambda x: x[1])]
+
+    plte.figure()
+    plte.imshow(np_image.astype(np.uint8))
+    plte.axis('off')
+    plte.show()
+
+    names = os.listdir('..\\..\\..\\dataset\\icons\\icons_photos')
+    for i in range(105):
+        index = sorted_inds[i]
+        print('Probability %0.2f%% => [%s]' % (probabilities[index], names[index]))
+```
+코드 수행 시, 이미지 창이 출력되고, 터미널에 측정 결과가 표시되면 정상 동작한 것임
