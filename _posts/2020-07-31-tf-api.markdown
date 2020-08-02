@@ -60,8 +60,8 @@ comments: 1
 		name: GeForce GTX 1060 major: 6 minor: 1 memoryClockRate(GHz): 1.6705
 		...
 		```
----
 
+---
 ### Tensorflow model 설치
 [Git Hub 페이지](https://github.com/EdjeElectronics/TensorFlow-Object-Detection-API-Tutorial-Train-Multiple-Objects-Windows-10)를 참조하여 작성
 1. Tensorflow model 다운로드
