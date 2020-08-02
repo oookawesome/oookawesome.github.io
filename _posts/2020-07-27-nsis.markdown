@@ -3,7 +3,7 @@ layout: post
 title: "NSIS를 이용한 인스톨러 구성 방법"
 date: 2020-07-27 14:30:00 +0300
 categories: DevOps
-tags: Nsis
+tags: NSIS
 comments: 1
 ---
 ##### Install
@@ -52,53 +52,53 @@ comments: 1
     - 커스텀 페이지의 표시될 내용은 스크립트 내부가 아닌 INI파일을 생성하여 해당 파일에 정의해야 함. 이 INI파일의 내용을 읽어와 인스톨러 페이지를 구성하게 됨.
     - INI파일의 경우, 반드시 [Settings]가 포함되어야 하고, 필드 추가 시 [Field 1]과 같은 형식으로 작성해야 함
     - ex. 그룹 박스와 라디오버튼 1개를 구성하려는 경우
-    ```
-    [Settings] 
-    NumFields=2 // 필드 갯수와 일치하는 지 확인 필요, 맞지 않으면 필드가 보이지 않음
-    Title=title!
-    NextButtonText=Next
-    BackButtonText=Back
+        ```
+        [Settings] 
+        NumFields=2 // 필드 갯수와 일치하는 지 확인 필요, 맞지 않으면 필드가 보이지 않음
+        Title=title!
+        NextButtonText=Next
+        BackButtonText=Back
+        
+        [Field 1]
+        Type=Groupbox
+        Text=addtional packages MUST be installed. Select Install Type
+        Flags=NOTABSTOP
+        Left=30 // 표시 위치 지정
+        Right=270
+        Top=0
+        Bottom=54
     
-    [Field 1]
-    Type=Groupbox
-    Text=addtional packages MUST be installed. Select Install Type
-    Flags=NOTABSTOP
-    Left=30 // 표시 위치 지정
-    Right=270
-    Top=0
-    Bottom=54
-
-    [Field 2]
-    Type=RadioButton
-    Text=offline
-    Flags=NOTIFY
-    State=1
-    Left=46
-    Right=122
-    Top=14
-    Bottom=25
-    ```
+        [Field 2]
+        Type=RadioButton
+        Text=offline
+        Flags=NOTIFY
+        State=1
+        Left=46
+        Right=122
+        Top=14
+        Bottom=25
+        ```
 5. 유저 선택에 대한 로직 구성
     - LeaveCustomPage 정의
     - 유저가 선택한 내용(ex. 라디오 버튼을 선택한 것)에 대해 처리하는 부분을 구성. 
     - 유저가 선택한 내용은 INI파일에 저장되고, 해당 파일의 state필드값에서 결과를 가져올 수 있음.
-    ```
-    Function LeaveCustomPage
-    !insertmacro INSTALLOPTIONS_READ $0 ${INIPATH} "Settings" "State" 
-    StrCmp $0 0 validate // NextButton을 페이지에서 누른 경우, state가 0임
-    Abort
-
-    validate:
-    !insertmacro INSTALLOPTIONS_READ $0 ${INIPATH} "Field 2" "State"
-    StrCmp $0 1 offlineInst
-
-    offlineInst:
-    Call offlineInstall
-    Goto done
-
-    done:
-    FunctionEnd
-    ```
+        ```
+        Function LeaveCustomPage
+        !insertmacro INSTALLOPTIONS_READ $0 ${INIPATH} "Settings" "State" 
+        StrCmp $0 0 validate // NextButton을 페이지에서 누른 경우, state가 0임
+        Abort
+    
+        validate:
+        !insertmacro INSTALLOPTIONS_READ $0 ${INIPATH} "Field 2" "State"
+        StrCmp $0 1 offlineInst
+    
+        offlineInst:
+        Call offlineInstall
+        Goto done
+    
+        done:
+        FunctionEnd
+        ```
 
 
 ##### 주요 스크립트 문법
