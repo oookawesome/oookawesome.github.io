@@ -4,6 +4,7 @@ title: "JenkinsFile을 활용한 Jenkins Pipeline 설정방법"
 date: 2018-07-07 17:30:00 +0300
 categories: DevOps
 tags: Jenkins
+comments: 1
 ---
 
 ##### 프롤로그

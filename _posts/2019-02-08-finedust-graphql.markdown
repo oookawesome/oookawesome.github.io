@@ -4,6 +4,7 @@ title: "GraphQL과 Apollo를 이용한 미세먼지 서버 개발"
 date: 2019-02-08 14:30:00 +0300
 categories: Frontend
 tags: GraphQL
+comments: 1
 ---
 
 ##### 프롤로그

@@ -4,6 +4,7 @@ title: "웹과 브라우저의 기본 개념과 동작 원리"
 date: 2018-06-02 17:30:00 +0300
 categories: Frontend
 tags: Web Browser
+comments: 1
 ---
 
 #### 시작

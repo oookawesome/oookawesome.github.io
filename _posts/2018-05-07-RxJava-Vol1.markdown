@@ -4,6 +4,7 @@ title: "RxJava를 활용한 리액티브 프로그래밍 정리 Vol.1"
 date: 2018-05-07 14:30:00 +0300
 categories: Java
 tags: RxJava ReactiveProgramming
+comments: 1
 ---
 
 ##### 1장 개요

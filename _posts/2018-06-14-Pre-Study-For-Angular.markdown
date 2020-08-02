@@ -4,6 +4,7 @@ title: "Node.js와 Electron, TypeScript 기초"
 date: 2018-06-14 17:30:00 +0300
 categories: Frontend
 tags: Node.js Electron TypeScript
+comments: 1
 ---
 
 ##### 시작

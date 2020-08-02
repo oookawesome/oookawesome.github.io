@@ -4,6 +4,7 @@ title: "Angular 학습 일지"
 date: 2018-07-07 18:30:00 +0300
 categories: Frontend
 tags: Angular
+comments: 1
 ---
 
 ##### 프롤로그

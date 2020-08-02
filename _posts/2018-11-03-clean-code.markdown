@@ -4,6 +4,7 @@ title: "클린 코드 책을 읽고"
 date: 2018-11-17 14:30:00 +0300
 categories: Coding
 tags: CleanCode
+comments: 1
 ---
 
 ##### 프롤로그

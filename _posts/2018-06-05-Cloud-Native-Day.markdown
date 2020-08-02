@@ -4,6 +4,7 @@ title: "Pivotal Cloud Native Day in Seoul 참석 후기"
 date: 2018-06-05 17:30:00 +0300
 categories: LifeStory
 tags: Pivotal Conference
+comments: 1
 ---
 
 6월 5일 피보탈에서 진행하는 Cloud Native Day 컨퍼런스에 참여했다. 피보탈에서 일하는 방법과 Cloud Native Application으로 product을 개발하는 방법에 대한 내용이었다. (이를 위한 Pivotal Cloud Foundry라는 자사 제품 홍보도 많았다.) 사실 Cloud Native가 뭔지도 잘 몰라서 찾아보기도 했다..

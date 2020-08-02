@@ -4,6 +4,7 @@ title: "AngularJS 개념과 특징 그리고 동작방식"
 date: 2018-06-16 17:30:00 +0300
 categories: Frontend
 tags: Angular
+comments: 1
 ---
 
 ##### 시작
