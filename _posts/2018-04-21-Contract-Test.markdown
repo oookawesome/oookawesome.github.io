@@ -4,6 +4,7 @@ title: "MSA에 Contract Test 적용 하기"
 date: 2018-04-21 15:10:00 +0300
 categories: Testing
 tags: ContractTest MSA
+comments: 1
 ---
 
 #####  투입!
