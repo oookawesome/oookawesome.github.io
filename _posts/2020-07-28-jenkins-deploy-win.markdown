@@ -61,7 +61,8 @@ Windows에서 Jenkins를 이용해 CI/CD환경을 구성하면서, 여러 삽질
             </service>
             ```
 2. Jenkins 재수행
-3. 기존 서비스 kill : `$for /f "tokens=5" %%a in ('netstat -aon ^| find ":8080" ^| find "LISTENING"') do taskkill /f /pid %%a`
+3. 기존 서비스 kill
+    - `$for /f "tokens=5" %%a in ('netstat -aon ^| find ":8080" ^| find "LISTENING"') do taskkill /f /pid %%a`
     - 8080포트의 프로세스를 찾아 프로세스 종료
     - 프로세스가 2개(0.0.0.0:8080, []:8080) 찾아지는 경우, 앞 서비스를 kill하고 두번째 것을 kill하려고 하면, 해당 프로세스가 없다고 에러를 출력하기도 함. 이 경우에는 "0.:8080"으로 find 검색어를 바꿔서 실행
 4. 빌드 : `$gradlew.bat clean build bootJar`
